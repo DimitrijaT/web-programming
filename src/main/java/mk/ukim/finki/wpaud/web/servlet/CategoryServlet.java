@@ -1,5 +1,8 @@
 package mk.ukim.finki.wpaud.web.servlet;
 
+import mk.ukim.finki.wpaud.model.Category;
+import mk.ukim.finki.wpaud.service.CategoryService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,51 +16,17 @@ import java.util.List;
 @WebServlet(name = "category", urlPatterns = "/servlet/category")
 public class CategoryServlet extends HttpServlet {
 
+    private final CategoryService categoryService;
 
-    class Category {
-        private String name;
-        private String description;
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Category(String name) {
-            this.name = name;
-        }
-
-        public Category(String name, String description) {
-            this.name = name;
-            this.description = description;
-        }
-    }
-
-    private List<Category> categoryList = null;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        categoryList = new ArrayList<>();
-        this.categoryList.add(new Category("Software", "Software Category"));
-        this.categoryList.add(new Category("Books", "Books Category"));
+    public CategoryServlet(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String ipAddress = req.getRemoteAddr();
         String clientAgent = req.getHeader("User-Agent");
+        resp.setContentType("text/html;charset=UTF-8");
 
         PrintWriter out = resp.getWriter();
         out.println("<html>");
@@ -73,7 +42,7 @@ public class CategoryServlet extends HttpServlet {
 
         out.println("<h3>Category List</h3>");
         out.println("<ul>");
-        this.categoryList.stream().forEach(x -> out.format("<li>%s (%s)</li>", x.getName(), x.getDescription()));
+        categoryService.listCategories().stream().forEach(x -> out.format("<li>%s (%s)</li>", x.getName(), x.getDescription()));
         out.println("</ul>");
 
         out.println("<h3>Add Category</h3>");
@@ -94,13 +63,8 @@ public class CategoryServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String categoryName = req.getParameter("name");
         String categoryDesc = req.getParameter("desc");
-        addCategory(categoryName, categoryDesc);
+        categoryService.create(categoryName, categoryDesc);
         resp.sendRedirect("/servlet/category");
     }
 
-    public void addCategory(String name, String desc) {
-        if (name != null && !name.isEmpty() && desc != null && !desc.isEmpty()) {
-            this.categoryList.add(new Category(name, desc));
-        }
-    }
 }
