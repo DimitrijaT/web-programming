@@ -19,20 +19,15 @@ public class LoginServlet extends HttpServlet {
     private final SpringTemplateEngine springTemplateEngine;
     private final AuthService authService;
 
-
     public LoginServlet(SpringTemplateEngine springTemplateEngine, AuthService authService) {
         this.springTemplateEngine = springTemplateEngine;
         this.authService = authService;
     }
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         WebContext context = new WebContext(req, resp, req.getServletContext());
         springTemplateEngine.process("login.html", context, resp.getWriter());
-
-
     }
 
     @Override
@@ -50,8 +45,7 @@ public class LoginServlet extends HttpServlet {
             springTemplateEngine.process("login.html", context, resp.getWriter());
         }
 
-        //NAJBITEN MOMENT: KAKO DA DODADEM E PODATOCI VO ODREDENA SESIJA
-
+        //NAJBITEN MOMENT: KAKO DA DODADEMЕ PODATOCI VO ODREDENA SESIJA
         req.getSession().setAttribute("user", user);
         resp.sendRedirect("/servlet/thymeleaf/category");
     }
