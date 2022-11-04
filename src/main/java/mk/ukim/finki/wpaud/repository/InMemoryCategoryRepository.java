@@ -13,7 +13,7 @@ public class InMemoryCategoryRepository {
 
     //Листање на сите категории
     public List<Category> findAll() {
-        return DataHolder.categoryList;
+        return DataHolder.categories;
     }
 
     //Зачувување на категорија (пребриши ако постои истото име)
@@ -21,19 +21,23 @@ public class InMemoryCategoryRepository {
         if (c == null || c.getName() == null || c.getName().isEmpty()) {
             return null;
         }
-        DataHolder.categoryList.removeIf(r -> r.getName().equals(c.getName())); //izbrishi go stariot
-        DataHolder.categoryList.add(c);
+        DataHolder.categories.removeIf(r -> r.getName().equals(c.getName())); //izbrishi go stariot
+        DataHolder.categories.add(c);
         return c;
     }
 
     //Пребарување на категорија по име
     public Optional<Category> findByName(String name) {
-        return DataHolder.categoryList.stream().filter(r -> r.getName().equals(name)).findFirst();
+        return DataHolder.categories.stream().filter(r -> r.getName().equals(name)).findFirst();
+    }
+
+    public Optional<Category> findById(Long id) {
+        return DataHolder.categories.stream().filter(r -> r.getId().equals(id)).findFirst();
     }
 
     //Пребарување на matching текст во листата на категории (и во името и во описот)
     public List<Category> search(String text) {
-        return DataHolder.categoryList.stream().filter(r -> r.getName().contains(text) || r.getDescription().contains(text)).collect(Collectors.toList());
+        return DataHolder.categories.stream().filter(r -> r.getName().contains(text) || r.getDescription().contains(text)).collect(Collectors.toList());
     }
 
     //Избриши категорија по име
@@ -41,6 +45,6 @@ public class InMemoryCategoryRepository {
         if (name == null){
             return;
         }
-         DataHolder.categoryList.removeIf(r -> r.getName().equals(name));
+         DataHolder.categories.removeIf(r -> r.getName().equals(name));
     }
 }

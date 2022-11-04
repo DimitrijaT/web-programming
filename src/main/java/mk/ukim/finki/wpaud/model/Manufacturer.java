@@ -1,20 +1,16 @@
 package mk.ukim.finki.wpaud.model;
 
-
 import lombok.Data;
 
 @Data
-public class Category {
-
+public class Manufacturer {
     private Long id;
     private String name;
-    private String Description;
+    private String address;
 
-    public Category(String name, String surname) {
+    public Manufacturer(String name, String address) {
         this.id = (long) (Math.random() * 1000);
         this.name = name;
-        this.Description = surname;
+        this.address = address;
     }
 }
-
-

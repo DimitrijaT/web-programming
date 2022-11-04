@@ -21,7 +21,6 @@ public class LoginController {
         this.authService = authService;
     }
 
-
     @GetMapping
 //    @RequestMapping(method = RequestMethod.GET, value = "")
     public String getLoginPage() {
