@@ -45,8 +45,6 @@ public class ShoppingCartController {
         } catch (RuntimeException exception) {
             return "redirect:/shopping-cart?error=" + exception.getMessage();
         }
-
-
     }
 
 }
