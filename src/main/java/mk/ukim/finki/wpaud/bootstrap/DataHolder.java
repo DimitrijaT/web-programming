@@ -17,23 +17,23 @@ public class DataHolder {
 
     @PostConstruct
     public void init() {
-        categories.add(new Category("Software", "Software Category"));
-        categories.add(new Category("Books", "Books Category"));
-
-        users.add(new User("dimitrija.timeski", "dt", "Dimitrija", "Timeski"));
-        users.add(new User("tomislav.stojceski", "ts", "Tomislav", "Stojceski"));
-        users.add(new User("branka.tasovska.stojceska", "bts", "Branka", "Tasovska"));
-
-        Manufacturer manufacturer = new Manufacturer("Nike", "NY NY");
-        manufacturers.add(manufacturer);
-        manufacturer = new Manufacturer("Adidas", "ADI DAS");
-        manufacturers.add(manufacturer);
-
-        Category category = new Category("Sport", "Sport category");
-        categories.add(category);
-
-        products.add(new Product("Ball 1", 235.8, 7, category, manufacturer));
-        products.add(new Product("Ball 2", 235.8, 7, category, manufacturer));
-        products.add(new Product("Ball 3", 235.8, 7, category, manufacturer));
+//        categories.add(new Category("Software", "Software Category"));
+//        categories.add(new Category("Books", "Books Category"));
+//
+//        users.add(new User("dimitrija.timeski", "dt", "Dimitrija", "Timeski"));
+//        users.add(new User("tomislav.stojceski", "ts", "Tomislav", "Stojceski"));
+//        users.add(new User("branka.tasovska.stojceska", "bts", "Branka", "Tasovska"));
+//
+//        Manufacturer manufacturer = new Manufacturer("Nike", "NY NY");
+//        manufacturers.add(manufacturer);
+//        manufacturer = new Manufacturer("Adidas", "ADI DAS");
+//        manufacturers.add(manufacturer);
+//
+//        Category category = new Category("Sport", "Sport category");
+//        categories.add(category);
+//
+//        products.add(new Product("Ball 1", 235.8, 7, category, manufacturer));
+//        products.add(new Product("Ball 2", 235.8, 7, category, manufacturer));
+//        products.add(new Product("Ball 3", 235.8, 7, category, manufacturer));
     }
 }

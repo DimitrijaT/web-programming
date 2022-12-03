@@ -1,7 +1,8 @@
 package mk.ukim.finki.wpaud.service.impl;
 
 import mk.ukim.finki.wpaud.model.Category;
-import mk.ukim.finki.wpaud.repository.InMemoryCategoryRepository;
+import mk.ukim.finki.wpaud.repository.impl.InMemoryCategoryRepository;
+import mk.ukim.finki.wpaud.repository.jpa.CategoryRepository;
 import mk.ukim.finki.wpaud.service.CategoryService;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +11,9 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final InMemoryCategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    public  CategoryServiceImpl(InMemoryCategoryRepository categoryRepository){
+    public  CategoryServiceImpl(CategoryRepository categoryRepository){
         this.categoryRepository = categoryRepository;
     }
 
@@ -41,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (name == null || name.isEmpty()){
             throw new IllegalArgumentException();
         }
-        categoryRepository.delete(name);
+        categoryRepository.deleteByName(name);
     }
 
     @Override
@@ -51,6 +52,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> searchCategories(String searchText) {
-        return categoryRepository.search(searchText);
+        return categoryRepository.findAllByNameLike(searchText);
     }
 }

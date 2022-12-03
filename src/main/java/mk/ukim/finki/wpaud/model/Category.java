@@ -18,9 +18,12 @@ public class Category {
     private String Description;
 
     public Category(String name, String surname) {
-        this.id = (long) (Math.random() * 1000);
         this.name = name;
         this.Description = surname;
+    }
+
+    public Category() {
+
     }
 }
 

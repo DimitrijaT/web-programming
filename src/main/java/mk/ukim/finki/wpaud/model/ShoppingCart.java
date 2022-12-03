@@ -28,7 +28,7 @@ public class ShoppingCart {
     private ShoppingCartStatus status;
 
     public ShoppingCart(User user) {
-        this.id = (long) (Math.random() * 1000);
+
         this.dateCreated = LocalDateTime.now();
         this.user = user;
         this.products = new ArrayList<>();
@@ -36,7 +36,7 @@ public class ShoppingCart {
     }
 
     public ShoppingCart() {
-        this.id = (long) (Math.random() * 1000);
+
     }
 
 }
