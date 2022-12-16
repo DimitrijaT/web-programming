@@ -36,7 +36,10 @@ public class ProductController {
         //во моделот ќе ги инјектираме сите продукти
         List<Product> products = this.productService.findAll();
         model.addAttribute("products", products);
-        return "products";
+
+
+        model.addAttribute("bodyContent","products");
+        return "master-template";
     }
 
     /**
@@ -64,7 +67,8 @@ public class ProductController {
         model.addAttribute("categories", categories);
         model.addAttribute("manufacturers", manufacturers);
 
-        return "add-product";
+        model.addAttribute("bodyContent","add-product");
+        return "master-template";
     }
 
     @GetMapping("/edit-form/{id}")

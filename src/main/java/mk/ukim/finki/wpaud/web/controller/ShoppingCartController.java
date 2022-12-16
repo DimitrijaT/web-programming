@@ -31,6 +31,9 @@ public class ShoppingCartController {
         ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(user.getUsername());
 
         model.addAttribute("products", this.shoppingCartService.listAllProductsInShoppingCart(shoppingCart.getId()));
+
+//        model.addAttribute("bodyContent","shopping-cart");
+//        return "master-template";
         return "shopping-cart";
     }
 
