@@ -7,6 +7,7 @@ import mk.ukim.finki.wpaud.model.Product;
 import mk.ukim.finki.wpaud.service.CategoryService;
 import mk.ukim.finki.wpaud.service.ManufacturerService;
 import mk.ukim.finki.wpaud.service.ProductService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +60,7 @@ public class ProductController {
      * Истото треба да го направиме и за manufacturer
      */
     @GetMapping("add-form")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     //мора да специфицираме add-form поради тоа што getProductPage го користи default-ниот "/products" mapping.
     public String addProductPage(Model model) {
         List<Category> categories = this.categoryService.listCategories();
@@ -81,7 +83,9 @@ public class ProductController {
             model.addAttribute("categories", categories);
             model.addAttribute("manufacturers", manufacturers);
             model.addAttribute("product", product);
-            return "add-product";
+
+            model.addAttribute("bodyContent","add-product");
+            return "master-template";
         }
         return "redirect:/products?error=ProductNotFound";
     }
