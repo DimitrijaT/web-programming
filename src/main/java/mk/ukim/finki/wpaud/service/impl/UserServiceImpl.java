@@ -3,6 +3,7 @@ package mk.ukim.finki.wpaud.service.impl;
 import mk.ukim.finki.wpaud.model.Role;
 import mk.ukim.finki.wpaud.model.User;
 import mk.ukim.finki.wpaud.model.exceptions.InvalidArgumentsException;
+import mk.ukim.finki.wpaud.model.exceptions.InvalidUsernameOrPasswordException;
 import mk.ukim.finki.wpaud.model.exceptions.PasswordsDoNotMatchException;
 import mk.ukim.finki.wpaud.model.exceptions.UsernameAlreadyExistsException;
 import mk.ukim.finki.wpaud.repository.jpa.UserRepository;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(String username, String password, String repeatPassword, String name, String surname, Role role) {
         if (username == null || username.isEmpty() || password == null || password.isEmpty())
-            throw new InvalidArgumentsException();
+            throw new InvalidUsernameOrPasswordException();
         if (!password.equals(repeatPassword))
             throw new PasswordsDoNotMatchException();
         if (this.userRepository.findByUsername(username).isPresent())
