@@ -19,4 +19,7 @@ public class WpAudApplication {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
+
+
+
 }
