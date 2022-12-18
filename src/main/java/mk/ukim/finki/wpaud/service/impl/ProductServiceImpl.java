@@ -5,9 +5,7 @@ import mk.ukim.finki.wpaud.model.Manufacturer;
 import mk.ukim.finki.wpaud.model.Product;
 import mk.ukim.finki.wpaud.model.exceptions.CategoryNotFoundException;
 import mk.ukim.finki.wpaud.model.exceptions.ManufacturerNotFoundException;
-import mk.ukim.finki.wpaud.repository.impl.InMemoryCategoryRepository;
-import mk.ukim.finki.wpaud.repository.impl.InMemoryManufacturerRepository;
-import mk.ukim.finki.wpaud.repository.impl.InMemoryProductRepository;
+import mk.ukim.finki.wpaud.model.exceptions.ProductNotFoundException;
 import mk.ukim.finki.wpaud.repository.jpa.CategoryRepository;
 import mk.ukim.finki.wpaud.repository.jpa.ManufacturerRepository;
 import mk.ukim.finki.wpaud.repository.jpa.ProductRepository;
@@ -56,6 +54,28 @@ public class ProductServiceImpl implements ProductService {
 
         return Optional.of(this.productRepository.save(new Product(name, price, quantity, category, manufacturer)));
     }
+
+    @Override
+    @Transactional
+    public Optional<Product> edit(Long id, String name, Double price, Integer quantity, Long categoryId, Long manufacturerId) {
+
+        Product product = this.productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+
+        product.setName(name);
+        product.setPrice(price);
+        product.setQuantity(quantity);
+
+        Category category = this.categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new CategoryNotFoundException(categoryId));
+        product.setCategory(category);
+
+        Manufacturer manufacturer = this.manufacturerRepository.findById(manufacturerId)
+                .orElseThrow(() -> new ManufacturerNotFoundException(manufacturerId));
+        product.setManufacturer(manufacturer);
+
+        return Optional.of(this.productRepository.save(product));
+    }
+
     @Override
     public void deleteById(Long id) {
         this.productRepository.deleteById(id);

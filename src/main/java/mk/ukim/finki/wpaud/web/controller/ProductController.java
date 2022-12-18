@@ -39,7 +39,7 @@ public class ProductController {
         model.addAttribute("products", products);
 
 
-        model.addAttribute("bodyContent","products");
+        model.addAttribute("bodyContent", "products");
         return "master-template";
     }
 
@@ -69,7 +69,7 @@ public class ProductController {
         model.addAttribute("categories", categories);
         model.addAttribute("manufacturers", manufacturers);
 
-        model.addAttribute("bodyContent","add-product");
+        model.addAttribute("bodyContent", "add-product");
         return "master-template";
     }
 
@@ -84,19 +84,25 @@ public class ProductController {
             model.addAttribute("manufacturers", manufacturers);
             model.addAttribute("product", product);
 
-            model.addAttribute("bodyContent","add-product");
+            model.addAttribute("bodyContent", "add-product");
             return "master-template";
         }
         return "redirect:/products?error=ProductNotFound";
     }
 
     @PostMapping("/add")
-    public String saveProduct(@RequestParam String name,
-                              @RequestParam Double price,
-                              @RequestParam Integer quantity,
-                              @RequestParam Long category,
-                              @RequestParam Long manufacturer) {
-        this.productService.save(name, price, quantity, category, manufacturer);
+    public String saveProduct(
+            @RequestParam(required = false) Long id,
+            @RequestParam String name,
+            @RequestParam Double price,
+            @RequestParam Integer quantity,
+            @RequestParam Long category,
+            @RequestParam Long manufacturer) {
+        if (id != null) {
+            this.productService.edit(id, name, price, quantity, category, manufacturer);
+        } else {
+            this.productService.save(name, price, quantity, category, manufacturer);
+        }
         return "redirect:/products";
     }
 }
